@@ -1,0 +1,31 @@
+---
+- name: Download and setup my dotfiles
+  hosts: localhost
+  connection: local
+  vars:
+    - home_dir: "{{ ansible_env.HOME }}"
+    - dot_dir: "{{ home_dir }}/.dotfiles"
+  tasks:
+    - name: Download dotfiles
+      git:
+        repo: "git@github.com:janwaltl/dotfiles.git"
+        dest: "{{ dot_dir }}"
+        update: yes
+    - name: "Create .config dir"
+      file: 
+        path: "{{ home_dir}}/.config"
+        state: directory
+    - name: Setup dotfiles symlinks
+      file:
+        src: "{{ dot_dir }}/{{ item }}"
+        dest: "{{ home_dir }}/{{ item }}"
+        state: link
+        force: yes
+      loop:
+          - ".config/nvim"
+          - ".gitconfig"
+          - ".tmux.conf"
+          - ".bashrc"
+          - ".bash_aliases"
+    #- ".clang-format"
+    #- ".clang-tidy"
