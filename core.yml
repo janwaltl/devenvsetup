@@ -6,8 +6,7 @@
   become: yes
   vars:
     - bin_dir: "/usr/bin"
-  tasks:
-    - name: Update packages
+  tasks: - name: Update packages
       apt:
         update_cache: True
         upgrade: yes
@@ -70,6 +69,8 @@
           - flake8 # Diagnostics
           - pyright # Diagnostics
           - pylint # Diagnostics
+          - yamllint # Diagnostics
+          - ansible-lint # Diagnostics
         state: present
     - name: Autoremove all unneeded packages
       apt:
