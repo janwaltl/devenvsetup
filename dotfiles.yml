@@ -10,9 +10,9 @@
       git:
         repo: "git@github.com:janwaltl/dotfiles.git"
         dest: "{{ dot_dir }}"
-        update: yes
+        update: true
     - name: "Create .config dir"
-      file: 
+      file:
         path: "{{ home_dir}}/.config"
         state: directory
     - name: Setup dotfiles symlinks
@@ -20,13 +20,12 @@
         src: "{{ dot_dir }}/{{ item }}"
         dest: "{{ home_dir }}/{{ item }}"
         state: link
-        force: yes
+        force: true
       loop:
-          - ".config/nvim"
-          - ".gitconfig"
-          - ".tmux.conf"
-          - ".bashrc"
-          - ".bash_aliases"
-          - ".gdbinit"
-    #- ".clang-format"
-    #- ".clang-tidy"
+        - ".config/nvim"
+        - ".gitconfig"
+        - ".tmux.conf"
+        - ".bashrc"
+        - ".bash_aliases"
+        - ".gdbinit"
+        - ".clang-format"

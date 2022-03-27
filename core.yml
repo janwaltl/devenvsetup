@@ -3,14 +3,15 @@
 - name: Install basic dev tools
   hosts: localhost
   connection: local
-  become: yes
+  become: true
   vars:
     - bin_dir: "/usr/bin"
-  tasks: - name: Update packages
+  tasks:
+    - name: Update packages
       apt:
-        update_cache: True
-        upgrade: yes
-        autoremove: yes
+        update_cache: true
+        upgrade: true
+        autoremove: true
     - name: Install LLVM 11 toolchain
       package:
         name:
@@ -27,22 +28,22 @@
         dest: "{{ bin_dir }}/{{ item }}"
         state: link
       loop:
-          - "clang-format"
-          - "clang-tidy"
-          - "clang"
-          - "clangd"
-          - "run-clang-tidy"
+        - "clang-format"
+        - "clang-tidy"
+        - "clang"
+        - "clangd"
+        - "run-clang-tidy"
     - name: Install generic tools
       package:
         name:
-          - build-essential # ...
-          - bear # Makefile -> compile_database.json
-          - git # ...
-          - gawk # GNU awk
-          - fzf # Fuzzy finder
-          - fuse3 # Support appimages
-          - openssh-client # ...
-          - openssh-server # ...
+          - build-essential  # ...
+          - bear  # Makefile -> compile_database.json
+          - git  # ...
+          - gawk  # GNU awk
+          - fzf  # Fuzzy finder
+          - fuse3  # Support appimages
+          - openssh-client  # ...
+          - openssh-server  # ...
         state: present
     - name: Install GCC toolchain
       package:
@@ -56,25 +57,25 @@
         dest: "{{ bin_dir }}/{{ item }}"
         state: link
       loop:
-          - "gcc"
-          - "g++"
+        - "gcc"
+        - "g++"
     - name: Python development tools
       pip:
-        name: 
-          - pynvim # For neovim
-          - compiledb # bear alternative
-          - poetry # Package management
-          - black # Formatter
-          - isort # Sort imports
-          - flake8 # Diagnostics
-          - pyright # Diagnostics
-          - pylint # Diagnostics
-          - yamllint # Diagnostics
-          - ansible-lint # Diagnostics
+        name:
+          - pynvim  # For neovim
+          - compiledb  # bear alternative
+          - poetry  # Package management
+          - black  # Formatter
+          - isort  # Sort imports
+          - flake8  # Diagnostics
+          - pyright  # Diagnostics
+          - pylint  # Diagnostics
+          - yamllint  # Diagnostics
+          - ansible-lint  # Diagnostics
         state: present
     - name: Autoremove all unneeded packages
       apt:
-        autoclean: yes
+        autoclean: true
     - name: Autoclean all unneeded packages
       apt:
-        autoremove: yes
+        autoremove: true

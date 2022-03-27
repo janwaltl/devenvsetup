@@ -12,7 +12,7 @@
         state: directory
         owner: "{{ user }}"
         group: "{{ user }}"
-        recurse: yes
+        recurse: true
     - name: Neovim prerequisities
       package:
         name:
@@ -26,6 +26,7 @@
         state: present
     - name: Download latest app image
       get_url:
-        url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+        url: >
+          "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
         dest: "{{ user_home }}/.local/bin/nvim"
         mode: '0711'
