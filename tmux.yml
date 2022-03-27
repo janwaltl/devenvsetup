@@ -1,0 +1,18 @@
+---
+- name: Install tmux
+  hosts: localhost
+  vars:
+    - user_home: "{{ ansible_env.HOME }}"
+    - user: "{{ ansible_env.USER }}"
+  connection: local
+  tasks:
+    - name: Download latest tmux as appimage
+      get_url:
+        url: "https://github.com/nelsonenzo/tmux-appimage/releases/download/3.2a/tmux.appimage"
+        dest: "{{ user_home }}/.local/bin/tmux"
+        mode: '0711'
+    - name: Download tmux plugin manager
+      git:
+        repo: "https://github.com/tmux-plugins/tpm"
+        dest: "{{ user_home }}/.tmux/plugins/tpm"
+        update: yes
