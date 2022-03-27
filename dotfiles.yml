@@ -27,5 +27,6 @@
           - ".tmux.conf"
           - ".bashrc"
           - ".bash_aliases"
+          - ".gdbinit"
     #- ".clang-format"
     #- ".clang-tidy"
