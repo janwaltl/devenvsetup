@@ -72,6 +72,7 @@
           - flake8  # Diagnostics
           - pyright  # Diagnostics
           - pylint  # Diagnostics
+          - pydocstyle  # Diagnostics
           - yamllint  # Diagnostics
           - ansible-lint  # Diagnostics
         state: present
