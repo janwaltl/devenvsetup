@@ -8,8 +8,7 @@
   tasks:
     - name: Download latest tmux as appimage
       get_url:
-        url: >
-          "https://github.com/nelsonenzo/tmux-appimage/releases/download/3.2a/tmux.appimage"
+        url: "https://github.com/nelsonenzo/tmux-appimage/releases/download/3.2a/tmux.appimage"
         dest: "{{ user_home }}/.local/bin/tmux"
         mode: '0711'
     - name: Download tmux plugin manager
