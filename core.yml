@@ -76,6 +76,15 @@
           - yamllint  # Diagnostics
           - ansible-lint  # Diagnostics
         state: present
+    - name: Download stylua
+      get_url:
+        url: "https://github.com/JohnnyMorganz/StyLua/releases/download/v0.12.5/stylua-0.12.5-linux.zip"
+        dest: "/tmp/stylua.zip"
+    - name: Install stylua
+      unarchive:
+        src: "/tmp/stylua.zip"
+        dest: "{{ bin_dir}}"
+        mode: 0711
     - name: Autoremove all unneeded packages
       apt:
         autoclean: true
