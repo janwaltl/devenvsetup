@@ -43,6 +43,7 @@
           - ripgrep  # ripgrep, used by fzf
           - fzf  # Fuzzy finder
           - fuse3  # Support appimages
+          - codespell  # Spellcheck in neovim
           - openssh-client  # ...
           - openssh-server  # ...
         state: present
