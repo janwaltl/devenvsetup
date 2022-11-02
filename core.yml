@@ -15,16 +15,16 @@
     - name: Install LLVM 11 toolchain
       package:
         name:
-          - llvm-11
-          - clang-format-11
-          - clang-tools-11
-          - clang-tidy-11
-          - clang-11
-          - clangd-11
+          - llvm-13
+          - clang-format-13
+          - clang-tools-13
+          - clang-tidy-13
+          - clang-13
+          - clangd-13
         state: present
     - name: Setup LLVM symlinks
       file:
-        src: "{{ bin_dir }}/{{ item }}-11"
+        src: "{{ bin_dir }}/{{ item }}-13"
         dest: "{{ bin_dir }}/{{ item }}"
         state: link
       loop:
@@ -37,7 +37,6 @@
       package:
         name:
           - build-essential  # ...
-          - bear  # Makefile -> compile_database.json
           - git  # ...
           - gawk  # GNU awk
           - ripgrep  # ripgrep, used by fzf
