@@ -64,8 +64,6 @@ else
 	print_progress "Primary key exists, skipping setup."
 fi
 
-wait_confirm "Please add the primary key to Github, done?"
-
 print_progress "Setting up dotfiles"
 ansible-playbook dotfiles.yml
 
