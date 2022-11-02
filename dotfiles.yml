@@ -20,7 +20,7 @@
         src: "{{ dot_dir }}/{{ item }}"
         dest: "{{ home_dir }}/{{ item }}"
         state: link
-        force: true
+        force: false
       loop:
         - ".config/nvim"
         - ".gitconfig"
