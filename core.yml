@@ -12,7 +12,7 @@
         update_cache: true
         upgrade: true
         autoremove: true
-    - name: Install LLVM 11 toolchain
+    - name: Install LLVM 13 toolchain
       package:
         name:
           - llvm-13
