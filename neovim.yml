@@ -5,6 +5,7 @@
     - user_home: "{{ ansible_env.HOME }}"
     - user: "{{ ansible_env.USER }}"
   connection: local
+  become: true
   tasks:
     - name: Create local bin directories
       file:
