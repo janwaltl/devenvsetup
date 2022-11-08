@@ -49,8 +49,8 @@
     - name: Install GCC toolchain
       package:
         name:
-          - gcc-10-multilib
-          - g++-10-multilib
+          - gcc-10
+          - g++-10
         state: present
     - name: Setup GCC symlinks
       file:
