@@ -45,6 +45,7 @@
           - codespell  # Spellcheck in neovim
           - openssh-client  # ...
           - openssh-server  # ...
+          - zip
         state: present
     - name: Install GCC toolchain
       package:
