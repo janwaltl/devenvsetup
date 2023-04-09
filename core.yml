@@ -46,6 +46,8 @@
           - openssh-client  # ...
           - openssh-server  # ...
           - zip
+          - ruff # Python linter
+
         state: present
     - name: Install GCC toolchain
       package:
@@ -69,12 +71,11 @@
           - poetry  # Package management
           - black  # Formatter
           - isort  # Sort imports
-          - flake8  # Diagnostics
           - pyright  # Diagnostics
-          - pylint  # Diagnostics
           - pydocstyle  # Diagnostics
           - yamllint  # Diagnostics
           - ansible-lint  # Diagnostics
+          - mdformat #  Markdown formatter
         state: present
     - name: Download stylua
       get_url:
