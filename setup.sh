@@ -43,7 +43,9 @@ pushd $TMPDIR
 
 print_progress "Installing Ansible"
 sudo apt-get install python3-dev python3-pip python3-virtualenv
-pip3 install ansible
+pip3 install ansible ansible-base --break-system-packages
+
+ansible-galaxy collection install community.general
 
 print_progress "Installing core packages"
 ansible-playbook core.yml -kK
@@ -68,8 +70,8 @@ print_progress "Setting up dotfiles"
 ansible-playbook dotfiles.yml
 
 print_progress "Installing VIM"
-ansible-playbook neovim.yml
+bash install_neovim.sh
 
 print_progress "Installing Tmux"
-ansible-playbook tmux.yml
+bash install_tmux.sh
 

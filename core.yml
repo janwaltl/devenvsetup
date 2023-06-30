@@ -12,19 +12,19 @@
         update_cache: true
         upgrade: true
         autoremove: true
-    - name: Install LLVM 13 toolchain
+    - name: Install LLVM 14 toolchain
       package:
         name:
-          - llvm-13
-          - clang-format-13
-          - clang-tools-13
-          - clang-tidy-13
-          - clang-13
-          - clangd-13
+          - llvm-14
+          - clang-format-14
+          - clang-tools-14
+          - clang-tidy-14
+          - clang-14
+          - clangd-14
         state: present
     - name: Setup LLVM symlinks
       file:
-        src: "{{ bin_dir }}/{{ item }}-13"
+        src: "{{ bin_dir }}/{{ item }}-14"
         dest: "{{ bin_dir }}/{{ item }}"
         state: link
       loop:
@@ -40,55 +40,74 @@
           - git  # ...
           - gawk  # GNU awk
           - ripgrep  # ripgrep, used by fzf
-          - fzf  # Fuzzy finder
           - fuse3  # Support appimages
           - codespell  # Spellcheck in neovim
           - openssh-client  # ...
           - openssh-server  # ...
           - zip
-          - ruff # Python linter
-
+          - unzip
+          - cmake
+          - gettext # For neovim
+          - curl
+          - wget
+          - bsdmainutils # for colrm
         state: present
     - name: Install GCC toolchain
       package:
         name:
-          - gcc-10
-          - g++-10
+          - gcc-12
+          - g++-12
         state: present
     - name: Setup GCC symlinks
       file:
-        src: "{{ bin_dir }}/{{ item }}-10"
+        src: "{{ bin_dir }}/{{ item }}-12"
         dest: "{{ bin_dir }}/{{ item }}"
         state: link
       loop:
         - "gcc"
         - "g++"
+    - name: check if cargo is installed
+      shell: command -v cargo
+      register: cargo_exists
+      ignore_errors: yes
+    - name: Download Installer
+      when: cargo_exists is failed
+      get_url:
+        url: https://sh.rustup.rs
+        dest: /tmp/sh.rustup.rs
+        mode: '0755'
+        force: 'yes'
+      tags:
+        - rust
+    - name: install rust
+      when: cargo_exists is failed
+      become: false
+      shell: /tmp/sh.rustup.rs -y
+      tags:
+        - rust
+    - name: install fzf
+      become: false
+      shell: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
     - name: Python development tools
       pip:
         name:
           - pynvim  # For neovim
           - compiledb  # bear alternative
           - poetry  # Package management
-          - black  # Formatter
-          - isort  # Sort imports
-          - pyright  # Diagnostics
-          - pydocstyle  # Diagnostics
+          - ruff  # Diagnostic
           - yamllint  # Diagnostics
           - ansible-lint  # Diagnostics
           - mdformat #  Markdown formatter
         state: present
-    - name: Download stylua
-      get_url:
-        url: "https://github.com/JohnnyMorganz/StyLua/releases/download/v0.12.5/stylua-0.12.5-linux.zip"
-        dest: "/tmp/stylua.zip"
+        extra_args: "--break-system-packages"
     - name: Install stylua
-      unarchive:
-        src: "/tmp/stylua.zip"
-        dest: "{{ bin_dir}}"
-        mode: 0711
+      become: false
+      community.general.cargo:
+        name: stylua
     - name: Autoremove all unneeded packages
       apt:
         autoclean: true
     - name: Autoclean all unneeded packages
       apt:
         autoremove: true
+
