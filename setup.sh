@@ -42,10 +42,13 @@ cp -r ./* ${TMPDIR}/
 pushd $TMPDIR
 
 print_progress "Installing Ansible"
-sudo apt-get install python3-dev python3-pip python3-virtualenv
+sudo apt-get install python3-dev python3-pip python3-virtualenv python3-venv
 pip3 install ansible ansible-base --break-system-packages
 
-ansible-galaxy collection install community.general
+#ansible-galaxy collection install community.general
+print_progress "Setting up dotfiles"
+ansible-playbook dotfiles.yml
+. ~/.bashrc
 
 print_progress "Installing core packages"
 ansible-playbook core.yml -kK
@@ -66,8 +69,6 @@ else
 	print_progress "Primary key exists, skipping setup."
 fi
 
-print_progress "Setting up dotfiles"
-ansible-playbook dotfiles.yml
 
 print_progress "Installing VIM"
 bash install_neovim.sh
