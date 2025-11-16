@@ -12,6 +12,7 @@ SSH_KEY="$HOME/.ssh/primary_key"
 COL='\033[0;36m'
 NCOL='\033[0m'
 DOTFILES_DIR=$REAL_HOME/.dotfiles
+VENV="$HOME/.venv"
 
 function print_progress(){
 	echo -e "${COL}<====" "$@" "====>${NCOL}"
@@ -43,12 +44,15 @@ pushd $TMPDIR
 
 print_progress "Installing Ansible"
 sudo apt-get install python3-dev python3-pip python3-virtualenv python3-venv
-pip3 install ansible ansible-base --break-system-packages
 
-#ansible-galaxy collection install community.general
+[ -d $VENV ] || python3 -m venv $VENV
+source $VENV/bin/activate
+pip3 install ansible
+
 print_progress "Setting up dotfiles"
 ansible-playbook dotfiles.yml
-. ~/.bashrc
+source ~/.bashrc
+source $VENV/bin/activate
 
 print_progress "Installing core packages"
 ansible-playbook core.yml -kK
