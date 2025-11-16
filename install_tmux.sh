@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-sudo apt-get install libevent-dev ncurses-dev build-essential bison pkg-config
+sudo apt-get install libevent-dev ncurses-dev build-essential bison pkg-config automake
 
 CLONE_DIR=/tmp/tmux.build
 if [ ! -d ${CLONE_DIR} ];then

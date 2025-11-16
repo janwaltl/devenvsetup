@@ -3,12 +3,12 @@
   hosts: localhost
   connection: local
   vars:
-    - home_dir: "{{ ansible_env.HOME }}"
-    - dot_dir: "{{ home_dir }}/.dotfiles"
+    home_dir: "{{ ansible_env.HOME }}"
+    dot_dir: "{{ home_dir }}/.dotfiles"
   tasks:
     - name: Download dotfiles
       git:
-        repo: "git@github.com:janwaltl/dotfiles.git"
+        repo: "https://github.com/janwaltl/dotfiles.git"
         dest: "{{ dot_dir }}"
         update: true
     - name: "Create .config dir"
