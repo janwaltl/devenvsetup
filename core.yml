@@ -93,11 +93,11 @@
         name:
           - pynvim  # For neovim
           - compiledb  # bear alternative
-          - poetry  # Package management
           - ruff  # Diagnostic
           - yamllint  # Diagnostics
           - ansible-lint  # Diagnostics
-          - mdformat #  Markdown formatter
+          - mdformat  # Markdown formatter
+          - uv
         state: present
         extra_args: "--break-system-packages"
     - name: Install stylua
