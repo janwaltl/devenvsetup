@@ -6,7 +6,7 @@ set -e
 
 # Use a temp folder for this setup
 TMPDIR=/tmp/setup-dir
-SSH_KEY="$HOME/.ssh/primary_key"
+SSH_KEY="$HOME/.ssh/devenvsetup_key"
 
 ## Pretty printing
 COL='\033[0;36m'
