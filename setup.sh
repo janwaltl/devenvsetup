@@ -42,21 +42,6 @@ sudo chmod a+rwx $TMPDIR
 cp -r ./* ${TMPDIR}/
 pushd $TMPDIR
 
-print_progress "Installing Ansible"
-sudo apt-get install python3-dev python3-pip python3-virtualenv python3-venv
-
-[ -d $VENV ] || python3 -m venv $VENV
-source $VENV/bin/activate
-pip3 install ansible
-
-print_progress "Setting up dotfiles"
-ansible-playbook dotfiles.yml
-source ~/.bashrc
-source $VENV/bin/activate
-
-print_progress "Installing core packages"
-ansible-playbook core.yml -kK
-
 print_progress "Setting up SSH keys"
 if [ ! -f "$SSH_KEY" ]; then
 	print_progress "Generating primary key at ${SSH_KEY}"
@@ -72,6 +57,22 @@ if [ ! -f "$SSH_KEY" ]; then
 else
 	print_progress "Primary key exists, skipping setup."
 fi
+
+print_progress "Installing Ansible"
+sudo apt-get install python3-dev python3-pip python3-virtualenv python3-venv
+
+[ -d $VENV ] || python3 -m venv $VENV
+source $VENV/bin/activate
+pip3 install ansible
+
+print_progress "Setting up dotfiles"
+ansible-playbook dotfiles.yml
+source ~/.bashrc
+source $VENV/bin/activate
+
+print_progress "Installing core packages"
+ansible-playbook core.yml -kK
+
 
 
 print_progress "Installing VIM"
