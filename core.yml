@@ -6,25 +6,27 @@
   become: true
   vars:
     bin_dir: "/usr/bin"
+    LLVM_version: "19"
+    GCC_version: "14"
   tasks:
     - name: Update packages
       apt:
         update_cache: true
         upgrade: true
         autoremove: true
-    - name: Install LLVM 19 toolchain
+    - name: Install LLVM {{ LLVM_version }} toolchain
       package:
         name:
-          - llvm-19
-          - clang-format-19
-          - clang-tools-19
-          - clang-tidy-19
-          - clang-19
-          - clangd-19
+          - llvm-{{ LLVM_version }}
+          - clang-format-{{ LLVM_version }}
+          - clang-tools-{{ LLVM_version }}
+          - clang-tidy-{{ LLVM_version }}
+          - clang-{{ LLVM_version }}
+          - clangd-{{ LLVM_version }}
         state: present
     - name: Setup LLVM symlinks
       file:
-        src: "{{ bin_dir }}/{{ item }}-19"
+        src: "{{ bin_dir }}/{{ item }}-{{ LLVM_version }}"
         dest: "{{ bin_dir }}/{{ item }}"
         state: link
       loop:
@@ -55,12 +57,12 @@
     - name: Install GCC toolchain
       package:
         name:
-          - gcc-14
-          - g++-14
+          - gcc-{{ GCC_version }}
+          - g++-{{ GCC_version }}
         state: present
     - name: Setup GCC symlinks
       file:
-        src: "{{ bin_dir }}/{{ item }}-14"
+        src: "{{ bin_dir }}/{{ item }}-{{ GCC_version }}"
         dest: "{{ bin_dir }}/{{ item }}"
         state: link
       loop:
@@ -110,4 +112,3 @@
     - name: Autoclean all unneeded packages
       apt:
         autoremove: true
-
