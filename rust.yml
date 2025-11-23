@@ -1,0 +1,31 @@
+---
+- name: Install rust and cargo packages
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  vars:
+    cargo_bin_path: "{{ ansible_facts['user_dir'] }}/.cargo/bin"
+  tasks:
+    - name: Check if cargo is already installed
+      stat:
+        path: "{{ cargo_bin_path }}/cargo"
+      register: cargo_stat
+    - name: Download Installer
+      when: not cargo_stat.stat.exists
+      block:
+        - name: Download rustup-init script
+          get_url:
+            url: https://sh.rustup.rs
+            dest: /tmp/rustup-init.sh
+            mode: '0755'
+        - name: Install rustup
+          shell: /tmp/rustup-init.sh -y
+        - name: Remove rustup-init script
+          file:
+            path: /tmp/rustup-init.sh
+            state: absent
+    - name: Install stylua
+      environment:
+        PATH: "{{ cargo_bin_path }}:{{ ansible_facts['env'].PATH }}"
+      community.general.cargo:
+        name: stylua

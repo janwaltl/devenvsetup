@@ -74,6 +74,8 @@ source $VENV/bin/activate
 print_progress "Installing core packages"
 ansible-playbook core.yml -kK
 
+print_progress "Installing rust"
+ansible-playbook rust.yml
 
 
 print_progress "Installing VIM"
