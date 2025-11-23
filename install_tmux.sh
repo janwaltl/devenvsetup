@@ -12,7 +12,7 @@ cd ${CLONE_DIR}
 
 sh autogen.sh
 ./configure --prefix=$HOME/.local
-make && sudo make install
+make -j4 && sudo make install
 
 TPM_DIR=~/.tmux/plugins/tpm
 if [ ! -d ${TPM_DIR} ];then
