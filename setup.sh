@@ -54,6 +54,7 @@ if [ ! -f "$SSH_KEY" ]; then
 	    PreferredAuthentications publickey
 	    IdentityFile $SSH_KEY
 	EOF
+	wait_confirm "Please add $SSH_KEY to your GitHub account"
 else
 	print_progress "Primary key exists, skipping setup."
 fi
