@@ -3,7 +3,7 @@
 set -e
 
 # Neovim prereqs
-sudo apt-get install liblua5.1-dev luajit libluajit-5.1-dev libperl-dev libncurses5-dev ruby-dev
+sudo apt-get install -y liblua5.1-dev luajit libluajit-5.1-dev libperl-dev libncurses5-dev ruby-dev
 
 
 CLONE_DIR="${HOME}/nvim/"
